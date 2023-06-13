@@ -5,4 +5,4 @@ RUN cd webapplication && mvn clean package
 
 FROM tomcat:latest
 RUN cp -R  /usr/local/tomcat/webapps.dist/*  /usr/local/tomcat/webapps
-COPY --from=builder /webapplication/webapp/target/webapp.war /usr/local/tomcat/webapps/webapp.war
+COPY --from=0 /webapplication/webapp/target/webapp.war /usr/local/tomcat/webapps/webapp.war
