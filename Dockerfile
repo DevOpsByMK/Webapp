@@ -1,5 +1,5 @@
 FROM ubuntu
-RUN apt update && apt install default-jdk -y && apt install maven -y
+RUN apt update && apt install default-jdk -y && apt install maven git -y
 RUN git clone https://github.com/DevOpsByMK/webapplication.git
 RUN cd webapplication && mvn clean package
 
