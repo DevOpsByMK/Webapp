@@ -1,22 +1,26 @@
-node {
-def mavenhome = tool name: "Maven3.8"
-def apphome = "/opt/application/web"
-stage("checkout")
-{
-  git credentialsId: 'Git_Token', url: 'https://github.com/DevOpsByMK/webapplication.git'
-}
-stage("build")
-{
-  $(params.enviroment)
-  sh("bash; ${mavenhome}/bin/mvn clean package")
-}
-stage("Deploy")
-{
-  if($(params.deploy) == true)
-  {
-    sshagent(["ubuntu"]){
-      sh("scp -o StrictHostKeyChecking=no webapp/target/webapp.war ubuntu@3.237.198.38:/opt/tomcat9/webapps/webapp.war")
+node("ApplicationServer"){
+    def mavenhome = tool name: 'Maven3.8'
+    def apphome = "/opt/application/web"
+
+    stage("checkout")
+    {
+        git branch: 'Dev', credentialsId: 'Git_Token', url: 'https://github.com/DevOpsByMK/webapplication.git'
     }
-  }
-}
+
+    stage("build")
+    {
+        echo "${environment}"
+        echo "${mavenhome}"
+        sh "bash; ${mavenhome}/bin/mvn clean package"
+    }
+    stage("Deploy")
+    {
+        echo "${deploy}"
+        if("${deploy}" == "true")
+        {
+            sshagent(["ubuntu"]){
+            sh("scp -o StrictHostKeyChecking=no webapp/target/webapp.war ubuntu@3.237.198.38:/opt/tomcat9/webapps/webapp.war")
+            }
+        }
+    }
 }
