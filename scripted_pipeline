@@ -1,4 +1,4 @@
-node("AppServer"){
+node("ApplicationServer"){
 def mavenhome = tool name: "Maven3.8"
 def apphome = "/opt/application/web"
 stage("checkout")
