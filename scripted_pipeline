@@ -1,5 +1,5 @@
 node("AppServer"){
-def mavenhome = tool name: "M3"
+def mavenhome = tool name: "M3.8"
 def apphome = "/opt/application/web"
 stage("checkout")
 {
@@ -15,7 +15,7 @@ stage("Deploy")
   if($(params.deploy) == true)
   {
     sshagent(["ubuntu"]){
-      sh("scp -o StrictHostKeyChecking=no webapp/target/webapp.war ubuntu@54.84.221.246:/opt/tomcat9/webapps/webapp.war")
+      sh("scp -o StrictHostKeyChecking=no webapp/target/webapp.war ubuntu@3.237.198.38:/opt/tomcat9/webapps/webapp.war")
     }
   }
 }
