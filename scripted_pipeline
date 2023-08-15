@@ -8,7 +8,7 @@ stage("checkout")
 stage("build")
 {
   $(params.enviroment)
-  sh("bash; $(mavenhome)/bin/mvn clean package")
+  sh("bash; ${mavenhome}/bin/mvn clean package")
 }
 stage("Deploy")
 {
